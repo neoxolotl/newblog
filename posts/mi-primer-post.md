@@ -1,10 +1,8 @@
 ---
 title: Mi Primer Post
 date: 2026-03-05
-tags: [javascript, github]
+tags: [javascript, github, blog]
 ---
-
-# Mi Primer Post
 
 ¡Hola mundo! Este es mi **primer artículo** cargado desde GitHub.
 
@@ -19,3 +17,7 @@ tags: [javascript, github]
 
 ```javascript
 console.log('Hola desde GitHub!');
+
+
+
+

@@ -5,278 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Blog desde GitHub</title>
     <meta name="description" content="Blog cargado directamente desde GitHub">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
-            color: #333;
-        }
-
-        header {
-            background: linear-gradient(135deg, #24292e 0%, #1a1f24 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            margin-bottom: 10px;
-            font-size: 2em;
-        }
-
-        header p {
-            opacity: 0.9;
-            font-size: 1.1em;
-        }
-
-        .post-list {
-            list-style: none;
-        }
-
-        .post-item {
-            background: white;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .post-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            border-left: 4px solid #24292e;
-        }
-
-        .post-item h2 {
-            color: #24292e;
-            margin-bottom: 8px;
-            font-size: 1.4em;
-        }
-
-        .post-item .post-filename {
-            color: #666;
-            font-size: 0.9em;
-            font-family: monospace;
-        }
-
-        .post-content {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: none;
-        }
-
-        .post-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .back-btn {
-            background: linear-gradient(135deg, #24292e 0%, #1a1f24 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .error {
-            background: #ffe6e6;
-            color: #cc0000;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #cc0000;
-        }
-
-        .error a {
-            color: #cc0000;
-            text-decoration: underline;
-        }
-
-        /* Estilos para Markdown */
-        .post-content h1 { 
-            margin: 25px 0 15px; 
-            color: #24292e;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        
-        .post-content h2 { 
-            margin: 20px 0 12px; 
-            color: #24292e;
-        }
-        
-        .post-content h3 {
-            margin: 15px 0 10px;
-            color: #24292e;
-        }
-
-        .post-content p { 
-            margin: 15px 0; 
-            font-size: 1.05em;
-        }
-
-        .post-content ul, .post-content ol {
-            margin: 15px 0;
-            padding-left: 30px;
-        }
-
-        .post-content li {
-            margin: 8px 0;
-        }
-
-        .post-content a { 
-            color: #0366d6; 
-            text-decoration: none;
-        }
-
-        .post-content a:hover {
-            text-decoration: underline;
-        }
-
-        .post-content code { 
-            background: #f6f8fa; 
-            padding: 3px 8px; 
-            border-radius: 4px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.9em;
-            color: #e83e8c;
-        }
-
-        .post-content pre { 
-            background: #24292e; 
-            color: #f8f8f2; 
-            padding: 20px; 
-            border-radius: 6px;
-            overflow-x: auto;
-            margin: 20px 0;
-        }
-
-        .post-content pre code {
-            background: transparent;
-            color: inherit;
-            padding: 0;
-        }
-
-        .post-content blockquote {
-            border-left: 4px solid #24292e;
-            padding: 15px 20px;
-            margin: 20px 0;
-            background: #f6f8fa;
-            border-radius: 0 6px 6px 0;
-            color: #555;
-        }
-
-        .post-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 6px;
-            margin: 20px 0;
-        }
-
-        .post-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .post-content th, .post-content td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        .post-content th {
-            background: #f6f8fa;
-            font-weight: 600;
-        }
-
-        /* Sección de comentarios */
-        #giscus-container {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 2px solid #eee;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 40px;
-        }
-
-        footer a {
-            color: #0366d6;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-
-            header {
-                padding: 30px 15px;
-            }
-
-            header h1 {
-                font-size: 1.6em;
-            }
-
-            .post-item {
-                padding: 20px;
-            }
-
-            .post-content {
-                padding: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -296,13 +25,13 @@
             <div id="article"></div>
             
             <!-- Contenedor de comentarios Giscus -->
-            <div id="giscus-container" style="display: none;"></div>
+            <div id="giscus-container"></div>
         </div>
     </main>
 
     <footer>
         <p>Hecho con ❤️ usando <a href="https://github.com" target="_blank">GitHub</a> y <a href="https://giscus.app" target="_blank">Giscus</a></p>
-        <p>© 2026 neoxolotl</p>
+        <p>© <span id="current-year"></span> neoxolotl</p>
     </footer>
 
     <!-- Markdown Parser -->
@@ -320,9 +49,15 @@
         let giscusLoaded = false;
 
         // Inicializar
-        document.addEventListener('DOMContentLoaded', loadPosts);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPosts();
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
 
-        // Cargar lista de posts
+        // =====================================================================
+        // FUNCIONES DE GITHUB API
+        // =====================================================================
+
         async function loadPosts() {
             try {
                 const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${POSTS_PATH}`;
@@ -368,7 +103,6 @@
             }
         }
 
-        // Renderizar lista de posts
         function renderPostList() {
             const listContainer = document.getElementById('post-list');
             
@@ -390,7 +124,64 @@
             `).join('');
         }
 
-        // Cargar un post específico
+        // =====================================================================
+        // FUNCIONES DE FRONTMATTER
+        // =====================================================================
+
+        function parseFrontmatter(markdown) {
+            const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+            const match = markdown.match(frontmatterRegex);
+            
+            if (match) {
+                const frontmatter = {};
+                const lines = match[1].split('\n');
+                
+                lines.forEach(line => {
+                    const colonIndex = line.indexOf(':');
+                    if (colonIndex > 0) {
+                        const key = line.substring(0, colonIndex).trim();
+                        let value = line.substring(colonIndex + 1).trim();
+                        
+                        // Quitar comillas si existen
+                        value = value.replace(/^['"]|['"]$/g, '');
+                        
+                        // Parsear arrays
+                        if (value.startsWith('[') && value.endsWith(']')) {
+                            value = value.slice(1, -1).split(',').map(v => v.trim().replace(/['"]/g, ''));
+                        }
+                        
+                        frontmatter[key] = value;
+                    }
+                });
+                
+                return {
+                    frontmatter,
+                    content: match[2]
+                };
+            }
+            
+            return {
+                frontmatter: {},
+                content: markdown
+            };
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            
+            try {
+                const date = new Date(dateString);
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString('es-ES', options);
+            } catch (e) {
+                return dateString;
+            }
+        }
+
+        // =====================================================================
+        // FUNCIONES DE CARGA DE POSTS
+        // =====================================================================
+
         async function loadPost(index) {
             const post = posts[index];
             const articleDiv = document.getElementById('article');
@@ -401,16 +192,41 @@
                 const response = await fetch(post.url);
                 const markdown = await response.text();
                 
-                // Convertir Markdown a HTML
-                const html = marked.parse(markdown);
+                // Parsear frontmatter
+                const { frontmatter, content } = parseFrontmatter(markdown);
+                
+                // Construir HTML con metadata + contenido
+                let html = '';
+                
+                // Agregar metadata si existe
+                if (frontmatter.title || frontmatter.date || frontmatter.tags) {
+                    html += '<div class="post-meta">';
+                    if (frontmatter.title) {
+                        html += `<h1 class="post-title">${frontmatter.title}</h1>`;
+                    }
+                    if (frontmatter.date) {
+                        html += `<p class="post-date">📅 ${formatDate(frontmatter.date)}</p>`;
+                    }
+                    if (frontmatter.tags && Array.isArray(frontmatter.tags)) {
+                        html += `<div class="post-tags">`;
+                        frontmatter.tags.forEach(tag => {
+                            html += `<span class="tag">#${tag}</span>`;
+                        });
+                        html += `</div>`;
+                    }
+                    html += '</div><hr class="meta-separator">';
+                }
+                
+                // Convertir Markdown a HTML (solo el contenido, sin frontmatter)
+                html += marked.parse(content);
                 
                 articleDiv.innerHTML = html;
                 document.getElementById('post-list').style.display = 'none';
                 document.getElementById('post-content').classList.add('active');
                 document.getElementById('giscus-container').style.display = 'block';
                 
-                // Cargar configuración de Giscus
-                loadGiscusConfig();
+                // Cargar Giscus después de que el contenido esté listo
+                setTimeout(() => loadGiscus(), 200);
                 
                 window.scrollTo(0, 0);
 
@@ -425,57 +241,15 @@
             }
         }
 
-        // Cargar configuración de Giscus desde archivo externo
-        async function loadGiscusConfig() {
-            if (giscusLoaded) {
-                // Si ya está cargado, solo recargar con nueva URL
-                sendMessageToGiscus();
-                return;
-            }
-
-            try {
-                const response = await fetch('giscus-config.html');
-                if (!response.ok) {
-                    throw new Error('No se encontró giscus-config.html');
-                }
-                
-                const html = await response.text();
-                document.getElementById('giscus-container').innerHTML = html;
-                giscusLoaded = true;
-                
-                console.log('✅ Giscus configurado correctamente');
-                
-            } catch (error) {
-                console.error('Error cargando Giscus:', error);
-                document.getElementById('giscus-container').innerHTML = `
-                    <div class="error">
-                        <strong>⚠️ Comentarios no disponibles</strong><br>
-                        ${error.message}<br><br>
-                        <small>Asegúrate de que giscus-config.html exista en el mismo directorio</small>
-                    </div>
-                `;
-            }
-        }
-
-        // Enviar mensaje a Giscus para recargar comentarios
-        function sendMessageToGiscus() {
-            const iframe = document.querySelector('iframe.giscus-frame');
-            if (iframe) {
-                iframe.contentWindow.postMessage(
-                    { giscus: { setConfig: { term: window.location.pathname } } },
-                    'https://giscus.app'
-                );
-            }
-        }
-
-        // Volver a la lista
         function showList() {
             document.getElementById('post-list').style.display = 'block';
             document.getElementById('post-content').classList.remove('active');
             document.getElementById('giscus-container').style.display = 'none';
+            // Limpiar Giscus para recargar en próximo post
+            document.getElementById('giscus-container').innerHTML = '';
+            giscusLoaded = false;
         }
 
-        // Formatear título (convierte slug a título legible)
         function formatTitle(slug) {
             return slug
                 .replace(/-/g, ' ')
@@ -483,6 +257,40 @@
                 .split(' ')
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
                 .join(' ');
+        }
+
+        // =====================================================================
+        // FUNCIONES DE GISCUS
+        // =====================================================================
+
+        function loadGiscus() {
+            const container = document.getElementById('giscus-container');
+            
+            // Evitar cargar múltiples veces
+            if (giscusLoaded || container.querySelector('script')) {
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = 'https://giscus.app/client.js';
+            script.setAttribute('data-repo', `${GITHUB_USERNAME}/${GITHUB_REPO}`);
+            script.setAttribute('data-repo-id', 'R_kgDOXXXXXXXXXX');      // ⚠️ CAMBIAR
+            script.setAttribute('data-category', 'General');
+            script.setAttribute('data-category-id', 'DIC_kwDOXXXXXXXXXX'); // ⚠️ CAMBIAR
+            script.setAttribute('data-mapping', 'pathname');
+            script.setAttribute('data-strict', '0');
+            script.setAttribute('data-reactions-enabled', '1');
+            script.setAttribute('data-emit-metadata', '0');
+            script.setAttribute('data-input-position', 'bottom');
+            script.setAttribute('data-theme', 'light');
+            script.setAttribute('data-lang', 'es');
+            script.setAttribute('crossorigin', 'anonymous');
+            script.setAttribute('async', '');
+            
+            container.appendChild(script);
+            giscusLoaded = true;
+            
+            console.log('✅ Giscus cargado correctamente');
         }
     </script>
 </body>
