@@ -6,6 +6,21 @@
     <title>Mi Blog desde GitHub</title>
     <meta name="description" content="Blog cargado directamente desde GitHub">
     <link rel="stylesheet" href="styles.css">
+
+<!-- PWA Meta Tags -->
+<meta name="theme-color" content="#24292e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mi Blog">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- Manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- Iconos (crear las imágenes) -->
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
 </head>
 <body>
     <header>
@@ -417,5 +432,20 @@
             return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
     </script>
+<!-- Registro de Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then((reg) => {
+          console.log('✅ Service Worker registrado:', reg.scope);
+        })
+        .catch((err) => {
+          console.error('❌ Error al registrar Service Worker:', err);
+        });
+    });
+  }
+</script>
+
 </body>
 </html>
