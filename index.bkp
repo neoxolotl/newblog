@@ -11,19 +11,6 @@
     <header>
         <h1>📝 Mi Blog</h1>
         <p>Artículos cargados directamente desde GitHub</p>
-        
-        <!-- 🔍 BUSCADOR -->
-        <div class="search-container">
-            <input 
-                type="text" 
-                id="search-input" 
-                class="search-input" 
-                placeholder="🔍 Buscar artículos..."
-                autocomplete="off"
-            >
-            <button id="search-clear" class="search-clear" style="display: none;">✕</button>
-        </div>
-        <div id="search-results-count" class="search-results-count"></div>
     </header>
 
     <main>
@@ -59,80 +46,13 @@
 
         // Estado
         let posts = [];
-        let filteredPosts = [];
         let giscusLoaded = false;
-        let postsContent = {}; // Caché de contenido para búsqueda
 
         // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
             loadPosts();
             document.getElementById('current-year').textContent = new Date().getFullYear();
-            initSearch();
         });
-
-        // =====================================================================
-        // FUNCIONES DE BÚSQUEDA
-        // =====================================================================
-
-        function initSearch() {
-            const searchInput = document.getElementById('search-input');
-            const searchClear = document.getElementById('search-clear');
-
-            // Búsqueda en tiempo real
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.trim().toLowerCase();
-                
-                // Mostrar/ocultar botón de limpiar
-                searchClear.style.display = query.length > 0 ? 'block' : 'none';
-                
-                // Filtrar posts
-                filterPosts(query);
-            });
-
-            // Botón de limpiar
-            searchClear.addEventListener('click', () => {
-                searchInput.value = '';
-                searchClear.style.display = 'none';
-                filterPosts('');
-                searchInput.focus();
-            });
-
-            // Enter para enfocar
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    searchInput.value = '';
-                    searchClear.style.display = 'none';
-                    filterPosts('');
-                    searchInput.blur();
-                }
-            });
-        }
-
-        function filterPosts(query) {
-            if (!query) {
-                filteredPosts = posts;
-                document.getElementById('search-results-count').textContent = '';
-                renderPostList();
-                return;
-            }
-
-            // Filtrar posts
-            filteredPosts = posts.filter(post => {
-                const title = post.name.toLowerCase();
-                const content = (postsContent[post.name] || '').toLowerCase();
-                
-                // Buscar en título y contenido
-                return title.includes(query) || content.includes(query);
-            });
-
-            // Mostrar contador
-            const count = filteredPosts.length;
-            const total = posts.length;
-            document.getElementById('search-results-count').textContent = 
-                `${count} resultado${count !== 1 ? 's' : ''} de ${total}`;
-
-            renderPostList();
-        }
 
         // =====================================================================
         // FUNCIONES DE GITHUB API
@@ -164,7 +84,6 @@
                         path: file.path
                     }));
 
-                filteredPosts = posts;
                 renderPostList();
 
             } catch (error) {
@@ -186,38 +105,23 @@
 
         function renderPostList() {
             const listContainer = document.getElementById('post-list');
-            const searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
             
-            if (filteredPosts.length === 0) {
-                if (searchQuery) {
-                    listContainer.innerHTML = `
-                        <div class="loading">
-                            😕 No se encontraron artículos para "<strong>${escapeHtml(searchQuery)}</strong>"<br><br>
-                            <small>Intenta con otros términos</small>
-                        </div>
-                    `;
-                } else {
-                    listContainer.innerHTML = `
-                        <div class="loading">
-                            📭 No hay artículos disponibles<br><br>
-                            <small>Crea archivos .md en la carpeta posts/</small>
-                        </div>
-                    `;
-                }
+            if (posts.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="loading">
+                        📭 No hay artículos disponibles<br><br>
+                        <small>Crea archivos .md en la carpeta posts/</small>
+                    </div>
+                `;
                 return;
             }
 
-            listContainer.innerHTML = filteredPosts.map((post, index) => {
-                const title = formatTitle(post.name);
-                const highlightedTitle = searchQuery ? highlightMatch(title, searchQuery) : title;
-                
-                return `
-                    <div class="post-item" onclick="loadPost(${posts.indexOf(post)})">
-                        <h2>${highlightedTitle}</h2>
-                        <p class="post-filename">📄 ${post.name}.md</p>
-                    </div>
-                `;
-            }).join('');
+            listContainer.innerHTML = posts.map((post, index) => `
+                <div class="post-item" onclick="loadPost(${index})">
+                    <h2>${formatTitle(post.name)}</h2>
+                    <p class="post-filename">📄 ${post.name}.md</p>
+                </div>
+            `).join('');
         }
 
         // =====================================================================
@@ -287,9 +191,6 @@
                 
                 const response = await fetch(post.url);
                 const markdown = await response.text();
-                
-                // Guardar contenido en caché para búsqueda
-                postsContent[post.name] = markdown;
                 
                 // Parsear frontmatter
                 const { frontmatter, content } = parseFrontmatter(markdown);
@@ -396,25 +297,6 @@
             console.log('📝 Repo:', `${GITHUB_USERNAME}/${GITHUB_REPO}`);
             console.log('📝 Repo ID:', 'R_kgDORfKIsA');
             console.log('📝 Category ID:', 'DIC_kwDORfKIsM4C3wBu');
-        }
-
-        // =====================================================================
-        // FUNCIONES UTILITARIAS
-        // =====================================================================
-
-        function highlightMatch(text, query) {
-            const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-            return text.replace(regex, '<mark class="search-highlight">$1</mark>');
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function escapeRegex(string) {
-            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
     </script>
 </body>
