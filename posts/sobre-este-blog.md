@@ -27,11 +27,11 @@
 
 Blog **100% estático** usando:
 
-* GitHub (almacenamiento)
-* GitHub Pages (hosting)
-* JavaScript vanilla (renderizado)
-* Markdown (artículos)
-* Giscus (comentarios)
+* **GitHub** (almacenamiento)
+* **GitHub Pages** (hosting)
+* **JavaScript vanilla** (renderizado)
+* **Markdown** (artículos)
+* **Giscus** (comentarios)
 
 ## Características
 
@@ -46,313 +46,339 @@ Blog **100% estático** usando:
 
 ## Limitaciones
 
-* 60 requests por hora sin token
-* 5000 requests por hora con token
+* **60 requests/hora** sin token
+* **5000 requests/hora** con token
 * No recomendado para datos sensibles
-* Ideal para menos de 1000 posts
+* Ideal para menos de **1000 posts**
 
 ---
 
 # 2. Arquitectura
 
-Flujo:
+## Flujo
 
+```
 Usuario
-↓
+   ↓
 Navegador (index.html + CSS + JS)
-↓
+   ↓
 GitHub API
-↓
+   ↓
 Repositorio GitHub
+```
 
-Tecnologías utilizadas:
+## Tecnologías
 
-* HTML5
-* CSS3
-* JavaScript ES6+
+* **HTML5**
+* **CSS3**
+* **JavaScript ES6+**
+* **Markdown**
+* **GitHub API v3**
+* **Marked.js 4.x**
+* **Giscus**
+
+---
+
+# 3. Requisitos
+
+## Software
+
+* **Git 2.0+**
+* **Navegador moderno**
+* **Editor de texto**
+
+  * VS Code
+  * Nano
+  * Vim
+
+## Cuentas
+
+* **GitHub (gratis)**
+* **Giscus (gratis)**
+
+## Conocimientos
+
+* Git básico
+* HTML / CSS básico
 * Markdown
-* GitHub API v3
-* Marked.js 4.x
-* Giscus
+
+No se requiere JavaScript avanzado.
 
 ---
 
-3. Requisitos
+# 4. Configuración Inicial
 
-Software requerido:
+## 4.1 Crear Repositorio
 
-Git 2.0 o superior
-Navegador moderno
-Editor de texto (VS Code, Nano o Vim)
-
-Cuentas necesarias:
-
-GitHub (gratuita)
-Giscus (gratuita)
-
-Conocimientos recomendados:
-
-Git básico
-HTML y CSS básico
-Markdown
-
-No se requiere conocimiento avanzado de JavaScript.
+1. Inicia sesión en **GitHub**
+2. Clic en **+ → New repository**
+3. Nombre: `newblog`
+4. Debe ser **público** (requerido para GitHub Pages gratis)
+5. Presiona **Create repository**
 
 ---
 
-4. Configuración Inicial
+## 4.2 Clonar Repositorio
 
-4.1 Crear repositorio
-
-1. Inicia sesión en GitHub
-2. Haz clic en el botón + y selecciona New repository
-3. Nombre del repositorio: newblog
-4. Debe ser público (requerido para GitHub Pages gratuito)
-5. Presiona Create repository
-
----
-
-4.2 Clonar repositorio
-
+```bash
 git clone https://github.com/TU-USUARIO/newblog.git
 cd newblog
+```
 
 ---
 
-4.3 Activar Discussions
+## 4.3 Activar Discussions
 
-Ir a Settings del repositorio
-Buscar la sección General → Features
-Activar la opción Discussions
-Guardar los cambios
+1. Ir a **Settings** del repositorio
+2. Buscar **General → Features**
+3. Activar **Discussions**
+4. Guardar cambios
 
 ---
 
-5. Estructura del Proyecto
+# 5. Estructura del Proyecto
 
+```
 newblog/
-
-index.html
-styles.css
-DOCUMENTACION.md
-
-posts/
-
-mi-primer-post.md
-(otros posts)
+├── index.html
+├── styles.css
+├── DOCUMENTACION.md
+└── posts/
+    ├── mi-primer-post.md
+    └── (más posts)
+```
 
 ---
 
-6. Archivos del Proyecto
+# 6. Archivos del Proyecto
 
-6.1 index.html
+## 6.1 index.html
 
-Configuración necesaria dentro del archivo:
+Configuración requerida:
 
+```javascript
 const GITHUB_USERNAME = 'tu-usuario';
 const GITHUB_REPO = 'newblog';
 const POSTS_PATH = 'posts/';
 const GITHUB_TOKEN = '';
+```
 
 ---
 
-6.2 styles.css
+## 6.2 styles.css
 
-Este archivo contiene los estilos del sitio:
+Contiene estilos para:
 
-header
-buscador
-posts
-renderizado markdown
-giscus
-footer
-responsive
+* Header
+* Buscador
+* Posts
+* Renderizado Markdown
+* Giscus
+* Footer
+* Diseño responsive
 
 ---
 
-6.3 posts/*.md
+## 6.3 posts/*.md
 
 Ejemplo de post:
 
+```markdown
 ---
-
 title: Título del Post
 date: 2026-03-05
 tags: [categoria, tema]
------------------------
+---
 
 # Contenido del Post
 
-Escribe aquí tu artículo.
+Escribe aquí tu artículo...
+```
 
 ---
 
-7. Configuración de Giscus
+# 7. Configuración de Giscus
 
-Giscus es un sistema de comentarios que utiliza GitHub Discussions como backend.
+## ¿Qué es Giscus?
 
-Pasos:
+Sistema de comentarios que usa **GitHub Discussions como backend**.
 
-1. Activar Discussions en el repositorio
-2. Instalar la aplicación Giscus
-3. Obtener los IDs en https://giscus.app/es
-4. Actualizar index.html
+---
 
-Configuración ejemplo:
+## Pasos de Configuración
 
+1. Activar **Discussions** en el repositorio
+2. Instalar la app **Giscus**
+3. Obtener los IDs en:
+
+https://giscus.app/es
+
+4. Actualizar `index.html`
+
+---
+
+## Configuración en index.html
+
+```javascript
 script.setAttribute('data-repo', 'neoxolotl/newblog');
 script.setAttribute('data-repo-id', 'R_kgDOXXXXXXXXXX');
 script.setAttribute('data-category-id', 'DIC_kwDOXXXXXXXXXX');
 script.setAttribute('data-lang', 'es');
+```
 
 ---
 
-8. GitHub Pages
+# 8. GitHub Pages
 
-Activación:
+## Activar GitHub Pages
 
-Ir a Settings → Pages
-Seleccionar Deploy from a branch
-Elegir la rama main
-Carpeta root
-Guardar cambios
+1. Ir a **Settings → Pages**
+2. Source: **Deploy from a branch**
+3. Branch: **main**
+4. Folder: **/ (root)**
+5. Guardar
 
-URL del blog:
+---
 
+## URL del Blog
+
+```
 https://TU-USUARIO.github.io/newblog/
-
-Tiempo de deploy aproximado: 1 a 3 minutos.
+```
 
 ---
 
-9. Agregar nuevos posts
+## Tiempo de Deploy
 
-Crear archivo:
+El deploy tarda aproximadamente **1 a 3 minutos**.
 
+Puedes verificar el progreso en la pestaña **Actions**.
+
+---
+
+# 9. Agregar Nuevos Posts
+
+## Crear Post
+
+```bash
 nano posts/mi-nuevo-post.md
-
-Estructura del post:
+```
 
 ---
 
+## Estructura del Post
+
+```markdown
+---
 title: Mi Nuevo Post
 date: 2026-03-06
 tags: [tutorial, github]
-------------------------
+---
 
 # Contenido
 
-Escribe aquí.
-
-Subir a GitHub:
-
-git add posts/
-git commit -m "Agregar nuevo post"
-git push origin main
+Escribe aquí...
+```
 
 ---
 
-10. Mantenimiento
+## Subir a GitHub
 
-Actualizar post:
+```bash
+git add posts/
+git commit -m "Agregar nuevo post"
+git push origin main
+```
 
+---
+
+# 10. Mantenimiento
+
+## Actualizar Post
+
+```bash
 nano posts/mi-post.md
 git add posts/
 git commit -m "Actualizar post"
 git push origin main
+```
 
-Eliminar post:
+---
 
+## Eliminar Post
+
+```bash
 rm posts/post-antiguo.md
 git add posts/
 git commit -m "Eliminar post"
 git push origin main
+```
 
-Cambiar diseño:
+---
 
+## Cambiar Diseño
+
+```bash
 nano styles.css
 git add styles.css
 git commit -m "Actualizar estilos"
 git push origin main
+```
 
 ---
 
-11. Solución de Problemas
+# 11. Solución de Problemas
 
-Error 404 al cargar posts
+## Error 404 al Cargar Posts
 
-Posibles causas:
-
-La carpeta posts no existe
-El repositorio es privado
-POSTS_PATH incorrecto en index.html
-
-Solución:
-
-Crear la carpeta posts
-Hacer el repositorio público
-Verificar la configuración del path
+| Causa                      | Solución                                |
+| -------------------------- | --------------------------------------- |
+| Carpeta `posts/` no existe | Crear la carpeta y subir archivos `.md` |
+| Repositorio privado        | Cambiar a público                       |
+| POSTS_PATH incorrecto      | Verificar configuración en `index.html` |
 
 ---
 
-Giscus no carga
+## Giscus No Carga
 
-Posibles causas:
-
-Discussions no activado
-Aplicación Giscus no instalada
-IDs incorrectos
-Sitio abierto con file://
-
-Solución:
-
-Activar Discussions
-Instalar Giscus
-Obtener nuevos IDs
-Usar GitHub Pages
+| Causa                       | Solución                     |
+| --------------------------- | ---------------------------- |
+| Discussions no activado     | Activarlo en Settings        |
+| Giscus no instalado         | Instalar la app Giscus       |
+| IDs incorrectos             | Obtener nuevos en giscus.app |
+| Sitio abierto con `file://` | Usar GitHub Pages            |
 
 ---
 
-Buscador no funciona
+## Buscador No Funciona
 
-Posibles causas:
-
-JavaScript deshabilitado
-Errores en consola
-Cache del navegador
-
-Solución:
-
-Habilitar JavaScript
-Abrir consola con F12
-Limpiar cache con Ctrl + Shift + R
+| Causa                    | Solución                   |
+| ------------------------ | -------------------------- |
+| JavaScript deshabilitado | Activar JS en el navegador |
+| Error en consola         | Revisar con F12            |
+| Cache del navegador      | Ctrl + Shift + R           |
 
 ---
 
-12. Recursos
+# 12. Recursos
 
-GitHub
-https://github.com
+## Enlaces Oficiales
 
-GitHub Pages
-https://pages.github.com
-
-GitHub API
-https://docs.github.com/es/rest
-
-Giscus
-https://giscus.app/es
-
-Marked.js
-https://marked.js.org
-
-Markdown Guide
-https://www.markdownguide.org
+| Recurso        | URL                             |
+| -------------- | ------------------------------- |
+| GitHub         | https://github.com              |
+| GitHub Pages   | https://pages.github.com        |
+| GitHub API     | https://docs.github.com/es/rest |
+| Giscus         | https://giscus.app/es           |
+| Marked.js      | https://marked.js.org           |
+| Markdown Guide | https://www.markdownguide.org   |
 
 ---
 
-Licencia MIT
+# Licencia
 
-Última revisión: Marzo 2026
-Mantenido por: neoxolotl
-Versión: 1.0
+**Licencia MIT**
+
+Última revisión: **Marzo 2026**
+Mantenido por: **neoxolotl**
+Versión: **1.0**
