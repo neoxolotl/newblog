@@ -6,7 +6,7 @@
 
 ---
 
-![Dashboard de Uptime Kuma](images/kuma.jpg)
+![Dashboard de Uptime Kuma](kuma.jpg)
 
 
 # Índice
