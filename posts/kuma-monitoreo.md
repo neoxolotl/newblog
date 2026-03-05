@@ -6,6 +6,9 @@
 
 ---
 
+![Dashboard de Uptime Kuma](images/kuma.jpg)
+
+
 # Índice
 
 1. Introducción
@@ -22,6 +25,9 @@
 12. Recursos
 
 ---
+
+
+
 
 # 1. Introducción
 
