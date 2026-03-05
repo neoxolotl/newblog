@@ -6,8 +6,7 @@
 
 ---
 
-![Dashboard de Uptime Kuma](kuma.jpg)
-
+![Arquitectura de Uptime Kuma](https://raw.githubusercontent.com/neoxolotl/newblog/main/posts/images/kuma.jpg)
 
 # Índice
 
