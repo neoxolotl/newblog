@@ -212,3 +212,37 @@ echo "========================================="
 
 # Ejecutar (pedirá contraseña para sudo si es necesario)
 ./install-llama.sh
+
+### Cuando finalice vera lo siguiente 
+
+```bash
+[INFO] Verificando instalación...
+[OK] llama.cpp instalado correctamente.
+
+=========================================
+ Instalación completada
+=========================================
+
+
+Binarios:
+  /home/usr/llama.cpp/build/bin/
+
+Modelos GGUF:
+  /home/usr/models/
+
+Ejemplo de uso:
+
+  ./build/bin/llama-cli \
+      -m ~/models/modelo.gguf \
+      -p 'Hola' \
+      -n 128
+
+Servidor OpenAI-compatible:
+
+  ./build/bin/llama-server \
+      -m ~/models/modelo.gguf \
+      --host 0.0.0.0 \
+      --port 8080
+
+=========================================
+```
